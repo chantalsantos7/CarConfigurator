@@ -7,6 +7,7 @@ namespace Assets.Scripts.Vehicles
     public class RetroCar : Vehicle
     {
         private List<GameObject> carModels = new List<GameObject>();
+        private Quaternion prevRotation;
 
         private void Awake()
         {
@@ -31,6 +32,7 @@ namespace Assets.Scripts.Vehicles
                     if (carModel.activeInHierarchy)
                     {
                         carModel.transform.Rotate(new Vector3(0, rotationDegrees, 0) * Time.deltaTime);
+                        prevRotation = carModel.transform.rotation;
                     }
                 }
             }
@@ -43,6 +45,7 @@ namespace Assets.Scripts.Vehicles
                 if (i == colour)
                 {
                     carModels[i].SetActive(true);
+                    carModels[i].transform.SetPositionAndRotation(carModels[i].transform.position, prevRotation);
                 } else
                 {
                     carModels[i].SetActive(false);
