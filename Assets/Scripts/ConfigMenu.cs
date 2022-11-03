@@ -22,8 +22,10 @@ public class ConfigMenu : MonoBehaviour
     public TMP_Text FinalWheels;
     public TMP_Text FinaleEngine;
     public TMP_Text FinalInterior;
+    public AudioSource BgMusicSource;
     
-    private bool paused = false;
+    private bool rotationPaused = false;
+    private bool musicPaused = false;
     
     float TotalPrice;
     int selectedVehicleIndex = 0;
@@ -120,14 +122,27 @@ public class ConfigMenu : MonoBehaviour
 
     public void PauseButton()
     {
-        if (paused)
+        if (rotationPaused)
         {
             selectedVehicle.UnpauseRotation();
-            paused = false;
+            rotationPaused = false;
         } else
         {
-            paused = true;
+            rotationPaused = true;
             selectedVehicle.PauseRotation();
+        }
+    }
+
+    public void BgMusicButton()
+    {
+        if (musicPaused)
+        {
+            BgMusicSource.Play();
+            musicPaused = false;
+        } else
+        {
+            musicPaused = true;
+            BgMusicSource.Pause();
         }
     }
 
