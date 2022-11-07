@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TMPro.Examples;
 using UnityEngine;
 
 namespace Assets.Scripts.Vehicles
@@ -19,21 +18,21 @@ namespace Assets.Scripts.Vehicles
             foreach (Transform child in transform) 
             {
                 carModels.Add(child.gameObject);
+                if (child.gameObject.activeInHierarchy)
+                {
+                    initialRotation = child.transform.rotation;
+                }
             }
         }
         //get prev car's Y rotation, start the next car from that rotation
-
-        private void Update()
+        public override void Rotate()
         {
-            if (!rotationPaused)
+            foreach (var carModel in carModels)
             {
-                foreach (var carModel in carModels)
+                if (carModel.activeInHierarchy)
                 {
-                    if (carModel.activeInHierarchy)
-                    {
-                        carModel.transform.Rotate(new Vector3(0, rotationDegrees, 0) * Time.deltaTime);
-                        prevRotation = carModel.transform.rotation;
-                    }
+                    carModel.transform.Rotate(new Vector3(0, rotationDegrees, 0) * Time.deltaTime);
+                    prevRotation = carModel.transform.rotation;
                 }
             }
         }
@@ -52,6 +51,18 @@ namespace Assets.Scripts.Vehicles
                 }
             }
 
+        }
+
+        public override void ResetRotation()
+        {
+            PauseRotation();
+            foreach (var carModel in carModels)
+            {
+                if (carModel.activeInHierarchy)
+                {
+                    carModel.transform.SetPositionAndRotation(carModel.transform.position, initialRotation);
+                }
+            }
         }
     }
 }

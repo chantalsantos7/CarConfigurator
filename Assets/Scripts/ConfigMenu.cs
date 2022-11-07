@@ -2,9 +2,7 @@ using Assets.Scripts.Enumeration;
 using Assets.Scripts.Vehicles;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ConfigMenu : MonoBehaviour
 {
@@ -23,6 +21,8 @@ public class ConfigMenu : MonoBehaviour
     public TMP_Text FinaleEngine;
     public TMP_Text FinalInterior;
     public AudioSource BgMusicSource;
+
+    [SerializeField] private CameraMovement CameraController;
     
     private bool rotationPaused = false;
     private bool musicPaused = false;
@@ -154,6 +154,14 @@ public class ConfigMenu : MonoBehaviour
         FinalWheels.text = "Wheel: " + WheelDropdown.options[WheelDropdown.value].text;
         FinalInterior.text = "Interior Leather: " + LeatherDropdown.options[LeatherDropdown.value].text;
         FinalPrice.text = "Price: £" + TotalPrice;
-        
+        //stop the car's rotation, and switch to a different camera viewpoint
+        selectedVehicle.ResetRotation();
+        CameraController.SwitchCamView(true);
+    }
+
+    public void BackButton()
+    {
+        CameraController.SwitchCamView(false);
+        selectedVehicle.UnpauseRotation();
     }
 }

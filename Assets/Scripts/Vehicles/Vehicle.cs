@@ -15,6 +15,7 @@ namespace Assets.Scripts.Vehicles
         protected string carMake;
         public float rotationDegrees;
         protected bool rotationPaused;
+        protected Quaternion initialRotation;
 
         public virtual void ChangeColour(int colour) {}
         public string GetMake() { return carMake; }
@@ -23,10 +24,13 @@ namespace Assets.Scripts.Vehicles
         {
             if (!rotationPaused)
             {
-                transform.Rotate(new Vector3(0, rotationDegrees, 0) * Time.deltaTime);
+                Rotate();
             }
         }
 
+        public virtual void Rotate() { }
+        public virtual void ResetRotation() { }
+        
         public void PauseRotation()
         {
             rotationPaused = true;
@@ -36,6 +40,8 @@ namespace Assets.Scripts.Vehicles
         {
             rotationPaused = false;
         }
+
+        
 
     }
 }
