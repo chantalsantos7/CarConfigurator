@@ -7,7 +7,6 @@ public class CameraMovement : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera configCam;
     [SerializeField] private CinemachineVirtualCamera checkoutCam;
-    // Start is called before the first frame update
 
     public void SwitchCamView(bool onCheckout)
     {
